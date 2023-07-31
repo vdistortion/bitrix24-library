@@ -1,0 +1,49 @@
+{
+  "name": "bitrix24-library",
+  "description": "Promise-wrapper for JavaScript REST API Bitrix24 and a set of new methods",
+  "private": false,
+  "version": "0.0.1",
+  "license": "GPL",
+  "type": "module",
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    "types": "./index.d.ts",
+    "import": "./dist/index.js",
+    "require": "./dist/index.umd.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:astrotrain55/bitrix24-library.git"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "promises",
+    "bitrix24",
+    "bx24"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "ts-build": "tsc && npm run build",
+    "public": "npm run build && npm publish",
+    "lint": "eslint . --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "is-mobile": "^4.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.46.0",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.7"
+  }
+}
