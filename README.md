@@ -40,12 +40,7 @@ export default {
 
 ## Битрикс24
 
-### Ссылки
-
 * [Документация по REST API](https://dev.1c-bitrix.ru/rest_help/js_library/)
-* [UI-библиотека](https://dev.1c-bitrix.ru/api_d7/bitrix/ui/index.php)
-* [bitrix24-create-app](https://www.npmjs.com/package/bitrix24-create-app)
-* [vue-bitrix24](https://www.npmjs.com/package/vue-bitrix24)
 
 ### Системные функции
 
@@ -150,6 +145,11 @@ export default {
 * `.openLink(url[, inNewTab])` — Обёртка над методом `.openPath()`, открывает адрес в новой вкладке, если не можем открыть в том же окне или используем метод на телефоне. Чтобы сразу открыть ссылку в новой вкладке, передайте вторым параметром `true`
 
 * `.isMobile()` — [is-mobile](https://www.npmjs.com/package/is-mobile)
+
+## Ссылки
+
+* [vue-bitrix24](https://www.npmjs.com/package/vue-bitrix24)
+* [bitrix24-create-app](https://www.npmjs.com/package/bitrix24-create-app)
 
 <details>
   <summary>:imp:</summary>
