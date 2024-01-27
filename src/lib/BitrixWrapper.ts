@@ -63,9 +63,10 @@ export class BitrixWrapper {
 
   get appOption() {
     return {
-      set: (name, value) => new Promise((resolve) => {
-        this.BX24.appOption.set(name, value, resolve);
-      }),
+      set: (name, value) =>
+        new Promise((resolve) => {
+          this.BX24.appOption.set(name, value, resolve);
+        }),
       get: (name) => this.BX24.appOption.get(name),
     };
   }
@@ -97,15 +98,18 @@ export class BitrixWrapper {
 
   get placement() {
     return {
-      bindEvent: (eventName) => new Promise((resolve) => {
-        this.BX24.placement.bindEvent(eventName, resolve);
-      }),
-      call: (command, params) => new Promise((resolve) => {
-        this.BX24.placement.call(command, params, resolve);
-      }),
-      getInterface: () => new Promise((resolve) => {
-        this.BX24.placement.getInterface(resolve);
-      }),
+      bindEvent: (eventName) =>
+        new Promise((resolve) => {
+          this.BX24.placement.bindEvent(eventName, resolve);
+        }),
+      call: (command, params) =>
+        new Promise((resolve) => {
+          this.BX24.placement.call(command, params, resolve);
+        }),
+      getInterface: () =>
+        new Promise((resolve) => {
+          this.BX24.placement.getInterface(resolve);
+        }),
       info: () => this.BX24.placement.info(),
     };
   }
