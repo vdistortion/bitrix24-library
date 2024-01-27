@@ -1,5 +1,5 @@
 import { isMobile } from 'is-mobile';
-import { loadScript } from '../utils/loadScript';
+import { loadScript } from './utils/loadScript';
 import { BitrixWrapper } from './BitrixWrapper';
 import { BitrixBatch } from './BitrixBatch';
 

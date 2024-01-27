@@ -1,5 +1,7 @@
 export class BitrixWrapper {
-  constructor(BX24) {
+  protected readonly BX24: any = null;
+
+  constructor(BX24: any) {
     this.BX24 = BX24;
   }
 
@@ -9,7 +11,7 @@ export class BitrixWrapper {
     });
   }
 
-  install(callback) {
+  install(callback: any) {
     if (typeof callback === 'string') {
       this.BX24.install(callback);
       return Promise.resolve();
@@ -33,41 +35,41 @@ export class BitrixWrapper {
     });
   }
 
-  callMethod(method, params, callback) {
+  callMethod(method: any, params: any, callback: any) {
     this.BX24.callMethod(method, params, callback);
   }
 
-  callBatch(calls, bHaltOnError) {
+  callBatch(calls: any, bHaltOnError: any) {
     return new Promise((resolve) => {
       this.BX24.callBatch(calls, resolve, bHaltOnError);
     });
   }
 
-  callBind(event, handler, authType, callback) {
+  callBind(event: any, handler: any, authType: any, callback: any) {
     this.BX24.callBind(event, handler, authType, callback);
     return this.callUnbind.bind(this, event, handler, authType, callback);
   }
 
-  callUnbind(event, handler, authType, callback) {
+  callUnbind(event: any, handler: any, authType: any, callback: any) {
     this.BX24.callUnbind(event, handler, authType, callback);
   }
 
   get userOption() {
     return {
-      set: (name, value) => {
+      set: (name: any, value: any) => {
         this.BX24.userOption.set(name, value);
       },
-      get: (name) => this.BX24.userOption.get(name),
+      get: (name: any) => this.BX24.userOption.get(name),
     };
   }
 
   get appOption() {
     return {
-      set: (name, value) =>
+      set: (name: any, value: any) =>
         new Promise((resolve) => {
           this.BX24.appOption.set(name, value, resolve);
         }),
-      get: (name) => this.BX24.appOption.get(name),
+      get: (name: any) => this.BX24.appOption.get(name),
     };
   }
 
@@ -83,7 +85,7 @@ export class BitrixWrapper {
     });
   }
 
-  selectAccess(value) {
+  selectAccess(value: any) {
     return new Promise((resolve) => {
       if (Array.isArray(value)) this.BX24.selectAccess(value, resolve);
       else this.BX24.selectAccess(resolve);
@@ -98,11 +100,11 @@ export class BitrixWrapper {
 
   get placement() {
     return {
-      bindEvent: (eventName) =>
+      bindEvent: (eventName: any) =>
         new Promise((resolve) => {
           this.BX24.placement.bindEvent(eventName, resolve);
         }),
-      call: (command, params) =>
+      call: (command: any, params: any) =>
         new Promise((resolve) => {
           this.BX24.placement.call(command, params, resolve);
         }),
@@ -122,7 +124,7 @@ export class BitrixWrapper {
     return this.BX24.getLang();
   }
 
-  resizeWindow(width, height) {
+  resizeWindow(width: any, height: any) {
     return new Promise((resolve) => {
       this.BX24.resizeWindow(width, height, resolve);
     });
@@ -154,7 +156,7 @@ export class BitrixWrapper {
     return this.BX24.isReady();
   }
 
-  proxy(method, thisObject) {
+  proxy(method: any, thisObject: any) {
     return this.BX24.proxy(method, thisObject);
   }
 
@@ -162,21 +164,21 @@ export class BitrixWrapper {
     this.BX24.closeApplication();
   }
 
-  getDomain(isOrigin) {
+  getDomain(isOrigin: boolean) {
     const domain = this.BX24.getDomain();
     if (isOrigin) return ['https:', domain].join('//');
     return domain;
   }
 
-  openApplication(params) {
+  openApplication(params: any) {
     return new Promise((resolve) => {
       this.BX24.openApplication(params, resolve);
     });
   }
 
-  openPath(path) {
+  openPath(path: unknown) {
     return new Promise((resolve, reject) => {
-      this.BX24.openPath(path, (response) => {
+      this.BX24.openPath(path, (response: { result: string; errorCode: string | undefined }) => {
         if (response.result === 'error') reject(new Error(response.errorCode));
         resolve(path);
       });
@@ -187,18 +189,18 @@ export class BitrixWrapper {
     return this.BX24.proxyContext();
   }
 
-  scrollParentWindow(scroll) {
+  scrollParentWindow(scroll: any) {
     return new Promise((resolve) => {
       this.BX24.scrollParentWindow(scroll, resolve);
     });
   }
 
-  bind(element, eventName, callback) {
+  bind(element: any, eventName: any, callback: any) {
     this.BX24.bind(element, eventName, callback);
     return this.unbind.bind(this, element, eventName, callback);
   }
 
-  unbind(element, eventName, callback) {
+  unbind(element: any, eventName: any, callback: any) {
     this.BX24.unbind(element, eventName, callback);
   }
 
@@ -208,16 +210,16 @@ export class BitrixWrapper {
 
   get im() {
     return {
-      callTo: (userId, video) => {
+      callTo: (userId: any, video: any) => {
         this.BX24.im.callTo(userId, video);
       },
-      phoneTo: (number) => {
+      phoneTo: (number: any) => {
         this.BX24.im.phoneTo(number);
       },
-      openMessenger: (dialogId) => {
+      openMessenger: (dialogId: any) => {
         this.BX24.im.openMessenger(dialogId);
       },
-      openHistory: (dialogId) => {
+      openHistory: (dialogId: any) => {
         this.BX24.im.openHistory(dialogId);
       },
     };

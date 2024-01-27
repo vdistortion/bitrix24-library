@@ -1,34 +1,41 @@
 export class BitrixBatch {
-  constructor(callBatch, handlerList = {}) {
+  private readonly callBatch: any;
+  private handler: {};
+  private commands: any[] = [];
+  private result: {} = {};
+  private errors: {} = {};
+  private readonly delay: number = 500;
+  private readonly limit: number = 50;
+
+  constructor(callBatch: any, handlerList = {}) {
     this.callBatch = callBatch;
     this.handler = handlerList;
-    this.commands = [];
-    this.result = {};
-    this.errors = {};
-    this.delay = 500;
-    this.limit = 50;
   }
 
-  batch(request) {
+  batch(request: any) {
     this.commands = [];
     this.result = {};
     this.errors = {};
 
     return new Promise((resolve, reject) => {
       const requestList = this.parseRequest(request);
-      const payloadList = [];
+      const payloadList: any[][] = [];
       let errorsCount = 0;
 
-      this.callBatch(requestList, (result) => {
+      this.callBatch(requestList, (result: { [s: string]: unknown } | ArrayLike<unknown>) => {
         Object.entries(result).forEach(([key, value]) => {
+          // @ts-ignore
           const error = value.error();
 
           if (error) {
+            // @ts-ignore
             this.errors[key] = error;
             errorsCount += 1;
           }
 
+          // @ts-ignore
           const total = value.total();
+          // @ts-ignore
           const data = value.data();
           let dataLength = 1;
 
@@ -37,11 +44,13 @@ export class BitrixBatch {
             else if (Array.isArray(data)) dataLength = data.length;
           }
 
+          // @ts-ignore
           this.result[key] = data;
 
           if (total > this.limit && total > dataLength) {
             const length = Math.ceil(total / this.limit) - 1;
             const iterator = Array.from({ length });
+            // @ts-ignore
             payloadList.push([key, requestList[key], iterator]);
           }
         });
@@ -59,11 +68,11 @@ export class BitrixBatch {
     });
   }
 
-  buildCommandsArray(payloadList) {
-    let array = [];
+  buildCommandsArray(payloadList: any[][]) {
+    let array: (string | any[])[][] = [];
 
     payloadList.forEach(([key, request, iterator]) => {
-      iterator.forEach((_, i) => {
+      iterator.forEach((_: any, i: number) => {
         const index = i + 1;
         const start = this.limit * index;
         const newKey = [key, index].join('_');
@@ -82,18 +91,24 @@ export class BitrixBatch {
   }
 
   batchPayload() {
-    const payloads = [];
+    const payloads: any[] = [];
 
     this.commands.forEach((command) => {
       const request = Object.fromEntries(command);
-      const chunk = new Promise((resolve) => {
+      const chunk = new Promise<void>((resolve) => {
         setTimeout(() => {
-          this.callBatch(request, (result) => {
+          this.callBatch(request, (result: { [s: string]: unknown } | ArrayLike<unknown>) => {
             Object.entries(result).forEach(([oldKey, value]) => {
               const [key] = oldKey.split('_');
+              // @ts-ignore
               const data = value.data();
-              if (data?.items) this.result[key].items.push(...data.items);
-              else if (Array.isArray(data)) this.result[key].push(...data);
+              if (data?.items) {
+                // @ts-ignore
+                this.result[key].items.push(...data.items);
+              } else if (Array.isArray(data)) {
+                // @ts-ignore
+                this.result[key].push(...data);
+              }
             });
 
             resolve();
@@ -109,6 +124,7 @@ export class BitrixBatch {
 
   parseResult() {
     Object.entries(this.handler).forEach(([key, handler]) => {
+      // @ts-ignore
       if (this.result[key]) this.result[key] = handler(this.result[key]);
     });
 
@@ -116,13 +132,16 @@ export class BitrixBatch {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  parseRequest(r) {
+  parseRequest(r: { [s: string]: unknown } | ArrayLike<unknown>) {
     return Object.entries(r).reduce((acc, [key, request]) => {
       if (Array.isArray(request)) {
         const [method, params = {}] = request;
+        // @ts-ignore
         acc[key] = [method, params];
       } else {
+        // @ts-ignore
         const { method, params = {} } = request;
+        // @ts-ignore
         acc[key] = [method, params];
       }
 
@@ -131,7 +150,7 @@ export class BitrixBatch {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  addStart(request, start) {
+  addStart(request: [any, any], start: number) {
     const [method, params] = request;
     return [method, { start, ...params }];
   }
@@ -140,6 +159,7 @@ export class BitrixBatch {
     console.group(`${this.constructor.name}: Ошибки в методах!`);
 
     Object.entries(this.errors).forEach(([key, error]) => {
+      // @ts-ignore
       console.info(`[${key}]`, error.toString());
     });
 
