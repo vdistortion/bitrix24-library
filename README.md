@@ -2,13 +2,28 @@
 
 Promise-обёртка для работы с JavaScript REST API Bitrix24 и набор новых методов
 
-## Установка
+## Установка и подключение
 
 ```nodejs
 npm i -S bitrix24-library@latest
 ```
 
-## Подключение
+```js
+import Bitrix24 from 'bitrix24-library';
+
+Bitrix24.init().then((BX24) => {
+  console.log(BX24.getAuth());
+
+  const RestCall = BX24.createBatch();
+  RestCall.batch({
+    info: ['app.info'],
+    profile: ['profile'],
+  }).then(console.log);
+});
+```
+
+## Подключение и вызов методов на примере Vue.js
+
 ```js
 // main.js
 import { createApp } from 'vue';
@@ -22,8 +37,8 @@ Bitrix24.init().then((BX24) => {
 });
 ```
 
-## Вызов методов
 ```js
+// Options API
 export default {
   mounted() {
     console.log(this.$BX24.getAuth());
@@ -150,6 +165,7 @@ export default {
 
 * [vue-bitrix24](https://www.npmjs.com/package/vue-bitrix24)
 * [bitrix24-create-app](https://www.npmjs.com/package/bitrix24-create-app)
+* [bitrix24-stickerpack-app](https://github.com/astrotrain55/bitrix24-stickerpack-app)
 
 <details>
   <summary>:imp:</summary>
