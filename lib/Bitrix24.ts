@@ -1,13 +1,18 @@
-import { isMobile } from 'is-mobile';
+import { isMobile, IsMobileOptions } from 'is-mobile';
 import { loadScript } from './utils/loadScript';
 import { BitrixWrapper } from './BitrixWrapper';
 import { BitrixBatch } from './BitrixBatch';
 
-export class Bitrix24 extends BitrixWrapper {
-  isMobile = isMobile;
-  loadScript = loadScript;
+export class Bitrix24 extends BitrixWrapper implements IBitrix24Library {
+  isMobile(opts: IsMobileOptions) {
+    return isMobile(opts);
+  }
 
-  createBatch(handlerList = {}, BatchClass = BitrixBatch) {
+  loadScript(src: string) {
+    return loadScript(src);
+  }
+
+  createBatch(handlerList: IHandlerList = {}, BatchClass: any = BitrixBatch): IBitrix24Batch {
     return new BatchClass(this.BX24.callBatch, handlerList);
   }
 

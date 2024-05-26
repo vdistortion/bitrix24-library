@@ -1,18 +1,18 @@
-export class BitrixWrapper {
-  protected readonly BX24: any = null;
+export class BitrixWrapper implements IBitrix24Promise {
+  readonly BX24: IBitrix24;
 
-  constructor(BX24: any) {
+  constructor(BX24: IBitrix24) {
     this.BX24 = BX24;
   }
 
-  init() {
+  init(): Promise<void> {
     return new Promise((resolve) => {
       this.BX24.init(resolve);
     });
   }
 
-  install(callback: any) {
-    if (typeof callback === 'string') {
+  install(callback: string = ''): Promise<void> {
+    if (callback.length) {
       this.BX24.install(callback);
       return Promise.resolve();
     }
@@ -21,15 +21,15 @@ export class BitrixWrapper {
     });
   }
 
-  installFinish() {
+  installFinish(): void {
     this.BX24.installFinish();
   }
 
-  getAuth() {
+  getAuth(): IAuth {
     return this.BX24.getAuth();
   }
 
-  refreshAuth() {
+  refreshAuth(): Promise<IAuth> {
     return new Promise((resolve) => {
       this.BX24.refreshAuth(resolve);
     });
@@ -39,7 +39,7 @@ export class BitrixWrapper {
     this.BX24.callMethod(method, params, callback);
   }
 
-  callBatch(calls: any, bHaltOnError: any) {
+  callBatch(calls: TRequests, bHaltOnError: any): Promise<any> {
     return new Promise((resolve) => {
       this.BX24.callBatch(calls, resolve, bHaltOnError);
     });
@@ -56,43 +56,43 @@ export class BitrixWrapper {
 
   get userOption() {
     return {
-      set: (name: any, value: any) => {
+      set: (name: string, value: string): void => {
         this.BX24.userOption.set(name, value);
       },
-      get: (name: any) => this.BX24.userOption.get(name),
+      get: (name: string) => this.BX24.userOption.get(name),
     };
   }
 
   get appOption() {
     return {
-      set: (name: any, value: any) =>
+      set: (name: string, value: string): Promise<void> =>
         new Promise((resolve) => {
           this.BX24.appOption.set(name, value, resolve);
         }),
-      get: (name: any) => this.BX24.appOption.get(name),
+      get: (name: string) => this.BX24.appOption.get(name),
     };
   }
 
-  selectUser() {
+  selectUser(): Promise<IUser> {
     return new Promise((resolve) => {
       this.BX24.selectUser(resolve);
     });
   }
 
-  selectUsers() {
+  selectUsers(): Promise<IUser[]> {
     return new Promise((resolve) => {
       this.BX24.selectUsers(resolve);
     });
   }
 
-  selectAccess(value: any) {
+  selectAccess(disablesValues: string[] = []): Promise<IAccess[]> {
     return new Promise((resolve) => {
-      if (Array.isArray(value)) this.BX24.selectAccess(value, resolve);
+      if (disablesValues.length) this.BX24.selectAccess(disablesValues, resolve);
       else this.BX24.selectAccess(resolve);
     });
   }
 
-  selectCRM(params = {}) {
+  selectCRM(params: ISelectCRM): Promise<ISelectCRMResponse> {
     return new Promise((resolve) => {
       this.BX24.selectCRM(params, resolve);
     });
@@ -116,43 +116,43 @@ export class BitrixWrapper {
     };
   }
 
-  isAdmin() {
+  isAdmin(): boolean {
     return this.BX24.isAdmin();
   }
 
-  getLang() {
+  getLang(): string {
     return this.BX24.getLang();
   }
 
-  resizeWindow(width: any, height: any) {
+  resizeWindow(width: number, height: number): Promise<void> {
     return new Promise((resolve) => {
       this.BX24.resizeWindow(width, height, resolve);
     });
   }
 
-  fitWindow() {
+  fitWindow(): Promise<void> {
     return new Promise((resolve) => {
       this.BX24.fitWindow(resolve);
     });
   }
 
-  reloadWindow() {
+  reloadWindow(): void {
     this.BX24.reloadWindow();
   }
 
-  setTitle(title = '') {
+  setTitle(title: string): Promise<void> {
     return new Promise((resolve) => {
       this.BX24.setTitle(title, resolve);
     });
   }
 
-  ready() {
+  ready(): Promise<void> {
     return new Promise((resolve) => {
       this.BX24.ready(resolve);
     });
   }
 
-  isReady() {
+  isReady(): boolean {
     return this.BX24.isReady();
   }
 
@@ -160,47 +160,47 @@ export class BitrixWrapper {
     return this.BX24.proxy(method, thisObject);
   }
 
-  closeApplication() {
+  closeApplication(): void {
     this.BX24.closeApplication();
   }
 
-  getDomain(isOrigin: boolean) {
+  getDomain(isOrigin: boolean = false): string {
     const domain = this.BX24.getDomain();
     if (isOrigin) return ['https:', domain].join('//');
     return domain;
   }
 
-  openApplication(params: any) {
+  openApplication(params: any): Promise<void> {
     return new Promise((resolve) => {
       this.BX24.openApplication(params, resolve);
     });
   }
 
-  openPath(path: unknown) {
+  openPath(path: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.BX24.openPath(path, (response: { result: string; errorCode: string | undefined }) => {
         if (response.result === 'error') reject(new Error(response.errorCode));
-        resolve(path);
+        resolve();
       });
     });
   }
 
-  proxyContext() {
+  proxyContext(): any {
     return this.BX24.proxyContext();
   }
 
-  scrollParentWindow(scroll: any) {
+  scrollParentWindow(scroll: number): Promise<void> {
     return new Promise((resolve) => {
       this.BX24.scrollParentWindow(scroll, resolve);
     });
   }
 
-  bind(element: any, eventName: any, callback: any) {
+  bind(element: HTMLElement, eventName: any, callback: any) {
     this.BX24.bind(element, eventName, callback);
     return this.unbind.bind(this, element, eventName, callback);
   }
 
-  unbind(element: any, eventName: any, callback: any) {
+  unbind(element: HTMLElement, eventName: any, callback: any): void {
     this.BX24.unbind(element, eventName, callback);
   }
 
@@ -210,16 +210,16 @@ export class BitrixWrapper {
 
   get im() {
     return {
-      callTo: (userId: any, video: any) => {
+      callTo: (userId: any, video: any): void => {
         this.BX24.im.callTo(userId, video);
       },
-      phoneTo: (number: any) => {
+      phoneTo: (number: any): void => {
         this.BX24.im.phoneTo(number);
       },
-      openMessenger: (dialogId: any) => {
+      openMessenger: (dialogId: any): void => {
         this.BX24.im.openMessenger(dialogId);
       },
-      openHistory: (dialogId: any) => {
+      openHistory: (dialogId: any): void => {
         this.BX24.im.openHistory(dialogId);
       },
     };

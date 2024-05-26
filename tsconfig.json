@@ -19,5 +19,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "types/index.d.ts",
+    "types/batch-request.d.ts"
+  ]
 }

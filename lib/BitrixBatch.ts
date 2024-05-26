@@ -1,18 +1,18 @@
-export class BitrixBatch {
-  private readonly callBatch: any;
-  private handler: {};
+export class BitrixBatch implements IBitrix24Batch {
+  private readonly callBatch: Function;
+  private handler: IHandlerList;
   private commands: any[] = [];
   private result: {} = {};
   private errors: {} = {};
   private readonly delay: number = 500;
   private readonly limit: number = 50;
 
-  constructor(callBatch: any, handlerList = {}) {
+  constructor(callBatch: Function, handlerList: IHandlerList = {}) {
     this.callBatch = callBatch;
     this.handler = handlerList;
   }
 
-  batch(request: any) {
+  batch(request: TRequests) {
     this.commands = [];
     this.result = {};
     this.errors = {};
