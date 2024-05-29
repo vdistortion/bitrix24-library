@@ -1,3 +1,5 @@
+import { IBitrix24Batch, IHandlerList, BatchRequestType } from '../types';
+
 export class BitrixBatch implements IBitrix24Batch {
   private readonly callBatch: Function;
   private handler: IHandlerList;
@@ -12,7 +14,7 @@ export class BitrixBatch implements IBitrix24Batch {
     this.handler = handlerList;
   }
 
-  batch(request: TRequests) {
+  batch(request: BatchRequestType) {
     this.commands = [];
     this.result = {};
     this.errors = {};

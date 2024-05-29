@@ -20,8 +20,8 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
+    "lib",
     "src",
-    "index.d.ts",
-    "types/batch-request.d.ts"
+    "types"
   ]
 }

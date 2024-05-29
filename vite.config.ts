@@ -4,7 +4,7 @@ export default defineConfig({
   publicDir: false,
   build: {
     lib: {
-      entry: './lib/main.ts',
+      entry: './lib/index.ts',
       name: 'bitrix24-library',
       fileName: 'index',
     },

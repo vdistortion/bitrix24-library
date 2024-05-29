@@ -2,9 +2,10 @@ import { isMobile, IsMobileOptions } from 'is-mobile';
 import { loadScript } from './utils/loadScript';
 import { BitrixWrapper } from './BitrixWrapper';
 import { BitrixBatch } from './BitrixBatch';
+import { IBitrix24Batch, IBitrix24Library, IHandlerList } from '../types';
 
-export class Bitrix24 extends BitrixWrapper implements IBitrix24Library {
-  isMobile(opts: IsMobileOptions) {
+export class Bitrix24Library extends BitrixWrapper implements IBitrix24Library {
+  isMobile(opts?: IsMobileOptions) {
     return isMobile(opts);
   }
 

@@ -1,4 +1,25 @@
-interface IAuth {
+import { IsMobileOptions } from 'is-mobile';
+
+export declare type TMethod = string;
+
+export declare type TParams = {
+  [param: string]: any;
+};
+
+export declare type TRequestObject = {
+  method: TMethod;
+  params?: TParams;
+};
+
+export declare type TRequestArray = [method: TMethod, params?: TParams];
+
+export declare type BatchRequestType = {
+  [key: string]: TRequestObject | TRequestArray;
+};
+
+export declare type EventTargetType = Element | Document | Window;
+
+export declare interface IAuth {
   access_token: string;
   expires_in: number;
   refresh_token: string;
@@ -6,67 +27,82 @@ interface IAuth {
   member_id: string;
 }
 
-interface IUser {
+export declare interface IUser {
   id: string;
   name: string;
+  photo: string;
+  position: string;
+  sub: boolean;
+  sup: boolean;
+  url: string;
 }
 
-interface IAccess {
+export declare interface IAccess {
   id: string;
   name: string;
+  provider: string;
 }
 
-interface IAccessPayload {
-  (callback?: Function): IAccess[];
-  (disablesValues?: string[], callback?: Function): IAccess[];
+export declare interface IAccessPayload {
+  (callback: (res: IAccess[]) => void): void;
+  (disablesValues: string[], callback: (res: IAccess[]) => void): IAccess[];
 }
 
-interface IAccessPayloadPromise {
-  (): Promise<IAccess[]>;
-  (disablesValues?: string[]): Promise<IAccess[]>;
+export declare type EntityType = 'deal' | 'lead' | 'company' | 'contact' | 'quote';
+
+export declare interface ISelectCRM {
+  entityType?: EntityType[];
+  multiple?: boolean;
+  value?: string[] | { [key: string]: number[] };
 }
 
-interface ISelectCRM {
-  entityType: string[];
-  multiple: boolean;
-  value: string[] | { [key: string]: number[] };
+export declare interface ISelectCRMResponse {
+  [key: EntityType]: Object<{ [key: string]: string }>;
 }
 
-interface ISelectCRMResponse {
-  [key: string]: Array<{ [key: string]: string }>;
+export declare interface ISelectCRMPayload {
+  (callback: (res: ISelectCRMResponse) => void): void;
+  (config: ISelectCRM, callback: (res: ISelectCRMResponse) => void): void;
 }
 
-interface IHandlerList {
+export declare interface IHandlerList {
   [key: string]: (data: any) => any;
 }
 
-interface IBitrix24 {
+export declare interface IPlacementInfo {
+  placement: string;
+  options: any;
+}
+
+export declare function eventHandler(e?: Event): void;
+
+export declare interface IBitrix24 {
   init: (callback: Function) => void;
-  install: (callback: Function | string) => void;
+  install: (callback?: Function | string) => void;
   installFinish: () => void;
   getAuth: () => IAuth;
   refreshAuth: (callback: Function) => IAuth;
   callMethod: (method: string, params: any, callback?: Function) => void;
-  callBatch: (calls: TRequests, callback?: Function, bHaltOnError?: boolean) => void;
+  callBatch: (calls: BatchRequestType, callback?: Function, bHaltOnError?: boolean) => void;
   callBind: (event: string, handler: string, auth_type?: number, callback?: Function) => void;
   callUnbind: (event: string, handler: string, auth_type?: number, callback?: Function) => void;
   userOption: {
-    set: (name: string, value: string) => void;
-    get: (name: string) => string;
+    set: (name: string, value: any) => void;
+    get: (name: string) => any;
   };
   appOption: {
-    set: (name: string, value: string, callback?: Function) => void;
-    get: (name: string) => string;
+    set: (name: string, value: any, callback?: Function) => void;
+    get: (name: string) => any;
   };
-  selectUser: (callback: Function) => IUser;
-  selectUsers: (callback: Function) => IUser[];
+  selectUser: (callback: (res: IUser) => void) => void;
+  selectUsers: (callback: (res: IUser[]) => void) => void;
   selectAccess: IAccessPayload;
-  selectCRM: (params: ISelectCRM, callback?: Function) => ISelectCRMResponse;
+  selectCRM: ISelectCRMPayload;
   placement: {
     bindEvent: (event: any, callback: Function) => void;
     call: (command: any, params: any, callback: Function) => void;
     getInterface: (callback: Function) => void;
-    info: () => { placement: string; options: any };
+    info: () => IPlacementInfo;
   };
   isAdmin: () => boolean;
   getLang: () => string;
@@ -83,8 +119,8 @@ interface IBitrix24 {
   openPath: (path: string, callback?: Function) => void;
   proxyContext: () => any;
   scrollParentWindow: (scroll: number, callback?: Function) => void;
-  bind: (element: HTMLElement, event: string, handler: Function) => void;
-  unbind: (element: HTMLElement, event: string, handler: Function) => void;
+  bind: (element: EventTargetType, event: string, handler: eventHandler) => void;
+  unbind: (element: EventTargetType, event: string, handler: eventHandler) => void;
   getScrollSize: () => { scrollWidth: number; scrollHeight: number };
   loadScript: (script: string | string[], callback?: Function) => void;
   im: {
@@ -95,7 +131,7 @@ interface IBitrix24 {
   };
 }
 
-interface IBitrix24Promise {
+export declare interface IBitrix24Promise {
   BX24: IBitrix24;
   init: () => Promise<void>;
   install: (callback?: string) => Promise<void>;
@@ -103,26 +139,26 @@ interface IBitrix24Promise {
   getAuth: () => IAuth;
   refreshAuth: () => Promise<IAuth>;
   callMethod: (method: string, params: any, callback?: Function) => void;
-  callBatch: (calls: TRequests, bHaltOnError?: boolean) => Promise<any>;
+  callBatch: (calls: BatchRequestType, bHaltOnError?: boolean) => Promise<any>;
   callBind: (event: string, handler: string, auth_type?: number, callback?: Function) => Function;
   callUnbind: (event: string, handler: string, auth_type?: number, callback?: Function) => void;
   userOption: {
-    set: (name: string, value: string) => void;
-    get: (name: string) => string;
+    set: (name: string, value: any) => void;
+    get: (name: string) => any;
   };
   appOption: {
-    set: (name: string, value: string) => Promise<void>;
-    get: (name: string) => string;
+    set: (name: string, value: any) => Promise<any>;
+    get: (name: string) => any;
   };
   selectUser: () => Promise<IUser>;
   selectUsers: () => Promise<IUser[]>;
-  selectAccess: IAccessPayloadPromise;
-  selectCRM: (params: ISelectCRM) => Promise<ISelectCRMResponse>;
+  selectAccess: (disablesValues?: string[]) => Promise<IAccess[]>;
+  selectCRM: (config?: ISelectCRM) => Promise<ISelectCRMResponse>;
   placement: {
     bindEvent: (event: any) => Promise<unknown>;
     call: (command: any, params: any) => Promise<unknown>;
     getInterface: () => Promise<unknown>;
-    info: () => { placement: string; options: any };
+    info: () => IPlacementInfo;
   };
   isAdmin: () => boolean;
   getLang: () => string;
@@ -139,8 +175,8 @@ interface IBitrix24Promise {
   openPath: (path: string) => Promise<void>;
   proxyContext: () => any;
   scrollParentWindow: (scroll: number) => Promise<void>;
-  bind: (element: HTMLElement, event: string, handler: Function) => Function;
-  unbind: (element: HTMLElement, event: string, handler: Function) => void;
+  bind: (element: EventTargetType, event: string, handler: eventHandler) => Function;
+  unbind: (element: EventTargetType, event: string, handler: eventHandler) => void;
   getScrollSize: () => { scrollWidth: number; scrollHeight: number };
   im: {
     callTo: (userId: string | number, video?: boolean) => void;
@@ -150,16 +186,28 @@ interface IBitrix24Promise {
   };
 }
 
-interface IBitrix24Batch {
-  batch(request: T): Promise<K>;
+export declare interface IBitrix24Batch {
+  batch(request: BatchRequestType): Promise<any>;
 }
 
-interface IBitrix24Library extends IBitrix24Promise {
-  isMobile: (opts: any) => boolean;
+export declare interface IBitrix24Library extends IBitrix24Promise {
+  isMobile: (opts?: IsMobileOptions) => boolean;
   loadScript: (src: string) => Promise<unknown>;
   createBatch: (
     handlerList?: IHandlerList | undefined,
     BatchClass?: IBitrix24Batch | undefined,
   ) => IBitrix24Batch;
   openLink: (url: string, inNewTab?: boolean) => void;
+}
+
+declare function init(): Promise<IBitrix24Library>;
+
+export declare interface IBitrix24Plugin {
+  init: init;
+}
+
+declare global {
+  interface Window {
+    BX24: IBitrix24;
+  }
 }

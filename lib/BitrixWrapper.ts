@@ -1,3 +1,15 @@
+import {
+  IAccess,
+  IAuth,
+  IBitrix24,
+  IBitrix24Promise,
+  ISelectCRM,
+  ISelectCRMResponse,
+  IUser,
+  BatchRequestType,
+  EventTargetType,
+} from '../types';
+
 export class BitrixWrapper implements IBitrix24Promise {
   readonly BX24: IBitrix24;
 
@@ -39,7 +51,7 @@ export class BitrixWrapper implements IBitrix24Promise {
     this.BX24.callMethod(method, params, callback);
   }
 
-  callBatch(calls: TRequests, bHaltOnError: any): Promise<any> {
+  callBatch(calls: BatchRequestType, bHaltOnError: any): Promise<any> {
     return new Promise((resolve) => {
       this.BX24.callBatch(calls, resolve, bHaltOnError);
     });
@@ -92,9 +104,10 @@ export class BitrixWrapper implements IBitrix24Promise {
     });
   }
 
-  selectCRM(params: ISelectCRM): Promise<ISelectCRMResponse> {
+  selectCRM(params?: ISelectCRM): Promise<ISelectCRMResponse> {
     return new Promise((resolve) => {
-      this.BX24.selectCRM(params, resolve);
+      if (params) this.BX24.selectCRM(params, resolve);
+      else this.BX24.selectCRM(resolve);
     });
   }
 
@@ -195,12 +208,12 @@ export class BitrixWrapper implements IBitrix24Promise {
     });
   }
 
-  bind(element: HTMLElement, eventName: any, callback: any) {
+  bind(element: EventTargetType, eventName: any, callback: any) {
     this.BX24.bind(element, eventName, callback);
     return this.unbind.bind(this, element, eventName, callback);
   }
 
-  unbind(element: HTMLElement, eventName: any, callback: any): void {
+  unbind(element: EventTargetType, eventName: any, callback: any): void {
     this.BX24.unbind(element, eventName, callback);
   }
 
