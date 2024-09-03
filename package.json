@@ -40,8 +40,8 @@
     "is-mobile": "^4.0.0"
   },
   "devDependencies": {
-    "prettier": "3.2.5",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.11"
+    "prettier": "3.3.3",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2"
   }
 }
