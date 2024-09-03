@@ -2,9 +2,7 @@ import { IsMobileOptions } from 'is-mobile';
 
 export declare type TMethod = string;
 
-export declare type TParams = {
-  [param: string]: any;
-};
+export declare type TParams = Record<string, T>;
 
 export declare type TRequestObject = {
   method: TMethod;
@@ -13,9 +11,7 @@ export declare type TRequestObject = {
 
 export declare type TRequestArray = [method: TMethod, params?: TParams];
 
-export declare type BatchRequestType = {
-  [key: string]: TRequestObject | TRequestArray;
-};
+export declare type BatchRequestType = Record<string, TRequestObject | TRequestArray>;
 
 export declare type EventTargetType = Element | Document | Window;
 
@@ -53,11 +49,11 @@ export declare type EntityType = 'deal' | 'lead' | 'company' | 'contact' | 'quot
 export declare interface ISelectCRM {
   entityType?: EntityType[];
   multiple?: boolean;
-  value?: string[] | { [key: string]: number[] };
+  value?: string[] | Record<string, number[]>;
 }
 
 export declare interface ISelectCRMResponse {
-  [key: EntityType]: Object<{ [key: string]: string }>;
+  [key: EntityType]: Record<string, string>;
 }
 
 export declare interface ISelectCRMPayload {
