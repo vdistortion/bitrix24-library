@@ -2,7 +2,7 @@
   "name": "bitrix24-library",
   "description": "Promise-wrapper for JavaScript REST API Bitrix24 and a set of new methods",
   "private": false,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "GPL",
   "type": "module",
   "files": [
