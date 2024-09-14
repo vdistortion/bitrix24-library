@@ -1,4 +1,9 @@
 # bitrix24-library
+[![NPM Version](https://img.shields.io/npm/v/bitrix24-library?style=flat&logo=npm&label=version&color=cb3837)](https://www.npmjs.com/package/bitrix24-library)
+[![NPM Downloads](https://img.shields.io/npm/dw/bitrix24-library?style=flat&logo=npm&color=cb3837)](https://www.npmjs.com/package/bitrix24-library)
+[![GitHub repo size](https://img.shields.io/github/repo-size/astrotrain55/bitrix24-library?style=flat&logo=github)](https://github.com/astrotrain55/bitrix24-library)
+[![GitHub Repo stars](https://img.shields.io/github/stars/astrotrain55/bitrix24-library?style=flat&logo=github)](https://github.com/astrotrain55/bitrix24-library)
+[![GitHub Created At](https://img.shields.io/github/created-at/astrotrain55/bitrix24-library?style=flat&logo=github)](https://github.com/astrotrain55/bitrix24-library)
 
 Promise-обёртка для работы с JavaScript REST API Bitrix24 и набор новых методов
 
@@ -18,7 +23,7 @@ Bitrix24.init().then((BX24) => {
   RestCall.batch({
     info: ['app.info'],
     profile: ['profile'],
-  }).then(console.log);
+  }).then(console.info);
 });
 ```
 
@@ -41,13 +46,13 @@ Bitrix24.init().then((BX24) => {
 // Options API
 export default {
   mounted() {
-    console.log(this.$BX24.getAuth());
+    console.info(this.$BX24.getAuth());
 
     const RestCall = this.$BX24.createBatch();
     RestCall.batch({
       info: ['app.info'],
       profile: ['profile'],
-    }).then(console.log);
+    }).then(console.info);
   },
   inject: ['$BX24'],
 };
@@ -164,6 +169,7 @@ export default {
 ## Ссылки
 
 * [vue-bitrix24](https://www.npmjs.com/package/vue-bitrix24)
+* [react-bitrix24](https://www.npmjs.com/package/react-bitrix24)
 * [bitrix24-create-app](https://www.npmjs.com/package/bitrix24-create-app)
 * [bitrix24-stickerpack-app](https://github.com/astrotrain55/bitrix24-stickerpack-app)
 
