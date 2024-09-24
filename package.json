@@ -1,7 +1,6 @@
 {
   "name": "bitrix24-library",
   "description": "Promise-wrapper for JavaScript REST API Bitrix24 and a set of new methods",
-  "private": false,
   "version": "0.1.2",
   "license": "GPL",
   "type": "module",
@@ -32,7 +31,6 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 4200",
     "build": "tsc && vite build",
-    "preview": "vite preview",
     "public": "npm run build && npm publish",
     "format": "prettier . --write"
   },
@@ -41,7 +39,7 @@
   },
   "devDependencies": {
     "prettier": "3.3.3",
-    "typescript": "^5.5.4",
-    "vite": "^5.4.2"
+    "typescript": "^5.6.2",
+    "vite": "^5.4.7"
   }
 }
