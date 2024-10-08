@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:astrotrain55/bitrix24-library.git"
+    "url": "git@github.com:vdistortion/bitrix24-library.git"
   },
   "keywords": [
     "api",
