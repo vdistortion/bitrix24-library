@@ -31,7 +31,12 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 4200",
     "build": "tsc && vite build",
-    "public": "npm run build && npm publish",
+    "public:lib": "npm run build && npm publish",
+    "public:gh-pages": "gh-pages -d docs/.vitepress/dist -t --nojekyll",
+    "public": "npm run docs:build && npm run public:gh-pages",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "format": "prettier . --write"
   },
   "dependencies": {

@@ -1,11 +1,5 @@
 # bitrix24-library
 
-[![NPM Version](https://img.shields.io/npm/v/bitrix24-library?style=flat&logo=npm&label=version&color=cb3837)](https://www.npmjs.com/package/bitrix24-library)
-[![NPM Downloads](https://img.shields.io/npm/dw/bitrix24-library?style=flat&logo=npm&color=cb3837)](https://www.npmjs.com/package/bitrix24-library)
-[![GitHub repo size](https://img.shields.io/github/repo-size/vdistortion/bitrix24-library?style=flat&logo=github)](https://github.com/vdistortion/bitrix24-library)
-[![GitHub Repo stars](https://img.shields.io/github/stars/vdistortion/bitrix24-library?style=flat&logo=github)](https://github.com/vdistortion/bitrix24-library)
-[![GitHub Created At](https://img.shields.io/github/created-at/vdistortion/bitrix24-library?style=flat&logo=github)](https://github.com/vdistortion/bitrix24-library)
-
 Promise-обёртка для работы с JavaScript REST API Bitrix24 и набор новых методов
 
 ## Установка и подключение
@@ -177,20 +171,8 @@ Bitrix24.init().then((BX24) => {
 
 ### Новые методы
 
-- `.createBatch([handlerList[, BatchClass]])` — Создание пакетного выполнения запросов, надстройка над `.callBatch()` ([подробнее](BATCH.md))
+- `.createBatch([handlerList[, BatchClass]])` — Создание пакетного выполнения запросов, надстройка над `.callBatch()` ([подробнее](rest-call.md))
 
 - `.openLink(url[, inNewTab])` — Обёртка над методом `.openPath()`, открывает адрес в новой вкладке, если не можем открыть в том же окне или используем метод на телефоне. Чтобы сразу открыть ссылку в новой вкладке, передайте вторым параметром `true`
 
 - `.isMobile()` — [is-mobile](https://www.npmjs.com/package/is-mobile)
-
-## Ссылки
-
-- [vue-bitrix24](https://www.npmjs.com/package/vue-bitrix24)
-- [react-bitrix24](https://www.npmjs.com/package/react-bitrix24)
-- [bitrix24-create-app](https://www.npmjs.com/package/bitrix24-create-app)
-- [bitrix24-stickerpack-app](https://github.com/vdistortion/bitrix24-stickerpack-app)
-
-<details>
-  <summary>:imp:</summary>
-  Если вам не повезло работать с битриксом, надеюсь данная библиотека хоть немного облегчит разработку ¯\_(ツ)_/¯
-</details>
