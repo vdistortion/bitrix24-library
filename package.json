@@ -2,6 +2,7 @@
   "name": "bitrix24-library",
   "description": "Promise-wrapper for JavaScript REST API Bitrix24 and a set of new methods",
   "version": "0.1.2",
+  "author": "Валентин <valentin.distortion@gmail.com>",
   "license": "GPL",
   "type": "module",
   "files": [
@@ -16,6 +17,7 @@
     "import": "./dist/index.js",
     "require": "./dist/index.umd.cjs"
   },
+  "homepage": "https://vdistortion.github.io/bitrix24-library/",
   "repository": {
     "type": "git",
     "url": "git@github.com:vdistortion/bitrix24-library.git"
@@ -40,13 +42,13 @@
     "format": "prettier . --write"
   },
   "dependencies": {
-    "is-mobile": "^4.0.0"
+    "is-mobile": "^5.0.0"
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1",
+    "gh-pages": "^6.2.0",
     "prettier": "3.3.3",
-    "typescript": "^5.6.2",
-    "vite": "^5.4.8",
-    "vitepress": "^1.4.0"
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vitepress": "^1.5.0"
   }
 }

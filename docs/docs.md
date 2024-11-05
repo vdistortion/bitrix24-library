@@ -4,7 +4,7 @@ Promise-обёртка для работы с JavaScript REST API Bitrix24 и н
 
 ## Установка и подключение
 
-```nodejs
+```sh
 npm i -S bitrix24-library@latest
 ```
 
