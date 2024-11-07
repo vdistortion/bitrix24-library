@@ -2,6 +2,8 @@
 
 Promise-обёртка для работы с JavaScript REST API Bitrix24 и набор новых методов
 
+![bitrix24-library](bg.jpg)
+
 ## Установка и подключение
 
 ```sh

@@ -6,6 +6,8 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/vdistortion/bitrix24-library?style=flat&logo=github)](https://github.com/vdistortion/bitrix24-library)
 [![GitHub Created At](https://img.shields.io/github/created-at/vdistortion/bitrix24-library?style=flat&logo=github)](https://github.com/vdistortion/bitrix24-library)
 
+[![bitrix24-library](docs/bg.jpg)](https://vdistortion.github.io/bitrix24-library/)
+
 Promise-обёртка для работы с JavaScript REST API Bitrix24 и набор новых методов
 
 ## Установка и подключение
