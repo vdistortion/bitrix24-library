@@ -207,3 +207,7 @@ declare global {
     BX24: IBitrix24;
   }
 }
+
+export default {
+  init,
+};
