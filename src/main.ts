@@ -1,11 +1,16 @@
+import { Bitrix24 } from '../lib';
 import { loadScript } from '../lib/utils/loadScript';
-import { IBX24Vanilla, AjaxResultType } from '../types/bitrix24-library.types';
+import type { IBX24Vanilla, AjaxResultType } from '../types';
 import { buttons, callback } from './dom.ts';
 import './styles.css';
 
 await loadScript('https://api.bitrix24.com/api/v1/');
 const BX24: IBX24Vanilla = window.BX24;
 console.log(BX24);
+
+Bitrix24().then((BX24) => {
+  console.log(window.BX24, BX24);
+});
 
 const id = 2;
 const link = `/marketplace/view/${id}/`;

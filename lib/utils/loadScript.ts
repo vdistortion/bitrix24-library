@@ -1,24 +1,20 @@
-export function loadScript(src: string) {
+export function loadScript(src: string): Promise<HTMLScriptElement> {
   return new Promise((resolve, reject) => {
-    let shouldAppend = false;
-    let el: HTMLScriptElement | null = document.querySelector(`script[src^="${src}"]`);
+    let el = document.querySelector(`script[src="${src}"]`) as HTMLScriptElement | null;
 
     if (el) {
       resolve(el);
       return;
-    } else {
-      el = document.createElement('script');
-      el.async = true;
-      el.src = src;
-      shouldAppend = true;
     }
+
+    el = document.createElement('script');
+    el.async = true;
+    el.src = src;
 
     el.addEventListener('error', reject);
     el.addEventListener('abort', reject);
-    el.addEventListener('load', (e) => {
-      resolve(e.target);
-    });
+    el.addEventListener('load', () => resolve(el!));
 
-    if (shouldAppend) document.head.append(el);
+    document.head.appendChild(el);
   });
 }

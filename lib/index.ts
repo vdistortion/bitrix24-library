@@ -1,13 +1,17 @@
 import { loadScript } from './utils/loadScript';
-import { Bitrix24Library } from './Bitrix24';
-import { IBitrix24Library, IBitrix24Plugin } from '../types';
+import { createBitrix24Extended } from './Bitrix24Extended.ts';
+import { createBitrix24Async } from './Bitrix24Async.ts';
+import type { IBX24, IBX24Vanilla } from '../types';
 
-const Bitrix24Plugin: IBitrix24Plugin = {
-  async init(): Promise<IBitrix24Library> {
-    await loadScript('https://api.bitrix24.com/api/v1/');
-    const BX24: IBitrix24Library = new Bitrix24Library(window.BX24);
-    return BX24.init().then(() => BX24);
-  },
-};
+export async function Bitrix24(): Promise<IBX24> {
+  await loadScript('https://api.bitrix24.com/api/v1/');
+  const BX24Vanilla: IBX24Vanilla = { ...window.BX24 };
+  const BX24Async = createBitrix24Async(BX24Vanilla);
+  const BX24Extended = createBitrix24Extended(BX24Vanilla);
 
-export default Bitrix24Plugin;
+  return {
+    ...BX24Vanilla,
+    ...BX24Async,
+    ...BX24Extended,
+  };
+}
