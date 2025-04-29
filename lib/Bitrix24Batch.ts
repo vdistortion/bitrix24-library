@@ -1,4 +1,4 @@
-import type { IBitrix24Batch, IHandlerList, BatchRequestType } from '../types';
+import type { BatchRequestType, IBitrix24Batch, IHandlerList } from '../types';
 
 export class Bitrix24Batch implements IBitrix24Batch {
   private readonly callBatch: Function;

@@ -1,6 +1,6 @@
 import type { RequestMethodType, RequestParamsType } from './request.types';
 
-export type AjaxResultType<R, D> = {
+export type AjaxResultType<R = any, D = any> = {
   answer: {
     result: R;
     time: {
@@ -18,13 +18,21 @@ export type AjaxResultType<R, D> = {
   query: {
     method: RequestMethodType;
     data: RequestParamsType<D>;
-    callback: (response?: any) => void;
+    callback: (response?: AjaxResultType<R, D>) => void;
   };
   status: number;
-  date: () => any;
-  error: () => any;
-  more: () => any;
+  data: () => R;
+  error: () =>
+    | undefined
+    | {
+        status: number;
+        ex: {
+          error: string;
+          error_description: string;
+        };
+      };
+  error_description: () => undefined | string;
+  more: () => boolean;
   total: () => number;
-  time: () => any | undefined;
-  next: (cb?: Function) => any | false;
+  next: (cb?: Function) => false | XMLHttpRequest;
 };

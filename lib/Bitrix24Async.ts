@@ -8,6 +8,7 @@ import type {
   IBX24Vanilla,
   ISelectCRM,
   IUser,
+  OpenApplicationParamsType,
   SelectCRMResponseType,
 } from '../types';
 
@@ -40,15 +41,13 @@ export function createBitrix24Async(BX24: IBX24Vanilla): IBX24Async {
       });
     },
 
-    selectUserAsync(): Promise<IUser> {
+    selectUsersAsync(multiple): Promise<IUser | IUser[]> {
       return new Promise((resolve) => {
-        BX24.selectUser(resolve);
-      });
-    },
-
-    selectUsersAsync(): Promise<IUser[]> {
-      return new Promise((resolve) => {
-        BX24.selectUsers(resolve);
+        if (multiple) {
+          BX24.selectUsers(resolve);
+        } else {
+          BX24.selectUser(resolve);
+        }
       });
     },
 
@@ -97,24 +96,24 @@ export function createBitrix24Async(BX24: IBX24Vanilla): IBX24Async {
       return loadScript(src);
     },
 
-    openApplicationAsync(params: any): Promise<void> {
+    openApplicationAsync(params?: OpenApplicationParamsType): Promise<void> {
       return new Promise((resolve) => {
         BX24.openApplication(params, resolve);
       });
     },
 
-    openPathAsync(path: string): Promise<void> {
-      return new Promise((resolve, reject) => {
-        BX24.openPath(path, (response: { result: string; errorCode?: string }) => {
-          if (response.result === 'error') reject(new Error(response.errorCode));
-          resolve();
-        });
+    scrollParentWindowAsync(scroll: number | string): Promise<{ scroll: number }> {
+      return new Promise((resolve) => {
+        BX24.scrollParentWindow(scroll, resolve);
       });
     },
 
-    scrollParentWindowAsync(scroll: number): Promise<{ scroll: number }> {
-      return new Promise((resolve) => {
-        BX24.scrollParentWindow(scroll, resolve);
+    openPathAsync(path: string): Promise<void> {
+      return new Promise((resolve, reject) => {
+        BX24.openPath(path, (response) => {
+          if (response.result === 'error') reject(new Error(response.errorCode));
+          resolve();
+        });
       });
     },
   };

@@ -1,0 +1,101 @@
+## Битрикс24
+
+- [Документация по REST API](https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/index.html)
+
+### [Системные функции](https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/system-functions/index.html)
+
+- `.init(callback)` — Добавляет в список обработчик события "библиотека готова к работе"
+
+- `.install(callback)` — Возможность установить обработчик события "приложение запускается первый раз для текущего пользователя"
+
+- `.installFinish()` — Функция, сигнализирующая об окончании работы инсталлятора или настройщика приложения
+
+- `.getAuth()` — Получение текущих данных для авторизации через OAuth 2.0
+
+- `.refreshAuth(callback)` — Принудительное обновление ключа авторизации
+
+### [Вызов методов REST](https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/how-to-call-rest-methods/index.html)
+
+- `.callMethod(method[, params[, callback]])` — Метод вызывает указанный метод REST-сервиса с указанными параметрами
+
+- `.callBatch(calls[, callback[, bHaltOnError]])` — Пакетное выполнение запросов по несколько элементов (в настоящий момент не более, чем по 50)
+
+- `.callBind(event, handler[, authType[, callback]])` — Интерфейс, регистрирующий новый обработчик события
+
+- `.callUnbind(event, handler[, authType[, callback]])` — Интерфейс, удаляющий зарегистрированный обработчик события
+
+### [Настройки приложения](https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/options/index.html)
+
+- `.userOption` — Работа с настройками текущего пользователя
+
+- `.appOption` — Работа с общими настройками приложения. Установка значений настроек приложения доступна только пользователям с правом управления приложением (`.isAdmin()`)
+
+### [Показ системных диалогов](https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/system-dialogues/index.html)
+
+- `.selectUser(callback)` — Показать стандартный диалог одиночного выбора пользователя
+
+- `.selectUsers(callback)` — Показать стандартный диалог множественного выбора пользователей
+
+- `.selectAccess([disabledValues,] callback)` — Показать стандартный диалог выбора прав доступа
+
+- `.selectCRM([config,] callback)` — Показать стандартный диалог выбора сущности CRM
+
+### [Встраивание приложений](https://apidocs.bitrix24.ru/api-reference/widgets/ui-interaction/index.html)
+
+> Scope: _placement_
+
+- `.placement.info()` — Получение информации о контексте вызова
+
+- `.placement.getInterface(callback)` — Получение информации о js-интерфейсе текущего места встраивания: списке возможных команд и событий
+
+- `.placement.call(command[, params], callback)` — Вызов зарегистрированной команды интерфейса
+
+- `.placement.bindEvent(eventName, callback)` — Установка обработчика события интерфейса
+
+### [Дополнительные методы](https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/additional-functions/index.html)
+
+- `.isAdmin()` — Определяет, имеет ли текущий пользователь права на управление приложениями
+
+- `.getLang()` — Возвращает идентификатор языка текущего портала
+
+- `.resizeWindow(width, height[, callback])` — Изменяет размер фрейма с приложением
+
+- `.fitWindow(callback)` — Устанавливает размер фрейма с приложением в соответствии с размерами содержимого фрейма
+
+- `.reloadWindow()` — Перезагружает страницу портала с приложением
+
+- `.setTitle(title[, callback])` — Устанавливает заголовок страницы
+
+- `.ready(handler)` — Устанавливает обработчик события "DOM-структура документа готова к работе"
+
+- `.isReady()` — Флаг "DOM-структура документа готова к работе"
+
+- `.proxy(func, thisObject)` — Аналогична [BX.proxy](https://dev.1c-bitrix.ru/api_help/js_lib/kernel/events/bx_proxy.php)
+
+- `.proxyContext()` — При вызове изнутри прокси-функцию выдаст ссылку на оригинальный контекст выполнения прокси-функции
+
+- `.bind(element, eventName, callback)` — Устанавливает функцию callback в качестве обработчика события eventName объекта element, возвращает функцию для отписки `.unbind()` с теми же параметрами
+
+- `.unbind(element, eventName, callback)` — Убирает функцию callback в качестве обработчика события eventName объекта element
+
+- `.getDomain()` — Возвращает адрес портала Битрикс24
+
+- `.getScrollSize()` — Функция возвращает внутренние размеры фрейма приложения
+
+- `.loadScript(script[, callback])` — Загружает и выполняет клиентский js-файл
+
+- `.im.callTo(userId[, video])` — Звонок по внутренней связи
+
+- `.im.phoneTo(number)` — Звонок на телефонный номер
+
+- `.im.openMessenger([dialogId])` — Открытие окна мессенджера
+
+- `.im.openHistory(dialogId)` — Открытие окна истории
+
+- `.openApplication([params,] callback)` — Метод открывает приложение
+
+- `.closeApplication()` — Метод закрывает открытое модальное окно с приложением
+
+- `.scrollParentWindow(scroll[, callback])` — Метод прокручивает родительское окно
+
+- `.openPath(path[, callback])` — Метод открывает указанный путь внутри портала в слайдере

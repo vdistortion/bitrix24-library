@@ -32,7 +32,8 @@ interface IOpenApplicationParamsBase {
   bx24_leftBoundary?: number;
 }
 
-type OpenApplicationParamsType = IOpenApplicationParamsBase & Partial<Record<string, unknown>>;
+export type OpenApplicationParamsType = IOpenApplicationParamsBase &
+  Partial<Record<string, unknown>>;
 
 export interface IUser {
   readonly id: string;
@@ -61,6 +62,11 @@ export interface ISelectCRM {
 export type SelectCRMResponseType = {
   [key in EntityType]: Record<string, string>;
 };
+
+type OpenPathResultType =
+  | { result: 'close' }
+  | { result: 'error'; errorCode: 'PATH_NOT_AVAILABLE' }
+  | { result: 'error'; errorCode: 'METHOD_NOT_SUPPORTED_ON_DEVICE' };
 
 type BindType = <K extends keyof DocumentEventMap>(
   el: Element | Document | Window,
@@ -111,10 +117,10 @@ export declare interface IBX24Vanilla {
    *
    * [BX24.callMethod]{@link https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/how-to-call-rest-methods/bx24-call-method.html}
    */
-  callMethod: <T>(
+  callMethod: <T, A>(
     method: RequestMethodType,
     params?: RequestParamsType<T>,
-    callback?: (...args: any[]) => void,
+    callback?: (result: AjaxResultType<T, A>) => void,
   ) => void;
 
   /**
@@ -184,7 +190,7 @@ export declare interface IBX24Vanilla {
      *
      * [BX24.appOption.set]{@link https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/options/bx24-app-option-set.html}
      */
-    set: (name: string, value: any, callback?: (...args: any[]) => void) => void;
+    set: (name: string, value: any, callback?: (params: Record<string, any>) => void) => void;
 
     /**
      * Получить настройки приложения
@@ -243,9 +249,9 @@ export declare interface IBX24Vanilla {
      *
      * [BX24.placement.info]{@link https://apidocs.bitrix24.ru/api-reference/widgets/ui-interaction/bx24-placement-info.html}
      */
-    info: () => {
+    info: <T = Record<string, any>>() => {
       placement: string;
-      options: Record<string, any>;
+      options: T;
     };
 
     /**
@@ -265,7 +271,7 @@ export declare interface IBX24Vanilla {
      * [BX24.placement.call]{@link https://apidocs.bitrix24.ru/api-reference/widgets/ui-interaction/bx24-placement-call.html}
      */
     call: {
-      (cmd: string, params: Record<string, any>, cb: (...args: any[]) => void): void;
+      <T = Record<string, any>>(cmd: string, params: T, cb: (...args: any[]) => void): void;
       (cmd: string, cb: (...args: any[]) => void): void;
     };
 
@@ -351,7 +357,7 @@ export declare interface IBX24Vanilla {
    *
    * [BX24.proxyContext]{@link https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/additional-functions/bx24-proxy-context.html}
    */
-  proxyContext: () => any;
+  proxyContext: <O extends object>() => O | undefined;
 
   /**
    * Установить функцию в качестве обработчика события
@@ -436,7 +442,7 @@ export declare interface IBX24Vanilla {
   closeApplication: () => void;
 
   /**
-   * Прокрутить родительское окно
+   * Прокрутить родительское окно, 0 - прокрутить к самому началу
    *
    * [BX24.scrollParentWindow]{@link https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/additional-functions/bx24-scroll-parent-window.html}
    */
@@ -447,14 +453,7 @@ export declare interface IBX24Vanilla {
    *
    * [BX24.openPath]{@link https://apidocs.bitrix24.ru/api-reference/bx24-js-sdk/additional-functions/bx24-open-path.html}
    */
-  openPath: (
-    path: string,
-    cb?: {
-      (result: { result: 'close' }): void;
-      (result: { result: 'error'; errorCode: 'PATH_NOT_AVAILABLE' }): void;
-      (result: { result: 'error'; errorCode: 'METHOD_NOT_SUPPORTED_ON_DEVICE' }): void;
-    },
-  ) => void;
+  openPath: (path: string, cb?: (result: OpenPathResultType) => void) => void;
 }
 
 export declare interface IBX24Async {
@@ -465,8 +464,7 @@ export declare interface IBX24Async {
     calls: BatchRequestType<T>,
     bHaltOnError?: boolean,
   ) => Promise<Record<string, AjaxResultType<T, A>> | AjaxResultType<T, A>[]>;
-  selectUserAsync: () => Promise<IUser>;
-  selectUsersAsync: () => Promise<IUser[]>;
+  selectUsersAsync: (multiple?: boolean) => Promise<IUser | IUser[]>;
   selectAccessAsync: (disablesValues?: string[]) => Promise<IAccess[]>;
   selectCRMAsync: (config?: ISelectCRM) => Promise<SelectCRMResponseType>;
   resizeWindowAsync: (
@@ -476,19 +474,27 @@ export declare interface IBX24Async {
   fitWindowAsync: () => Promise<{ width: number; height: number }>;
   setTitleAsync: (title: string) => Promise<{ title: string }>;
   readyAsync: () => Promise<void>;
+  loadScriptAsync: (src: string) => Promise<HTMLScriptElement>;
   openApplicationAsync: (params?: OpenApplicationParamsType) => Promise<void>;
-  loadScriptAsync: (src: string) => Promise<unknown>;
+  scrollParentWindowAsync: (scroll: number | string) => Promise<{ scroll: number }>;
   openPathAsync: (path: string) => Promise<void>;
-  scrollParentWindowAsync: (scroll: number) => Promise<{ scroll: number }>;
 }
 
 export declare interface IBX24Extended {
+  /**
+   * Check if mobile browser, based on useragent string.
+   *
+   * [is-mobile]{@link https://www.npmjs.com/package/is-mobile}
+   */
   isMobile: (opts?: IsMobileOptions) => boolean;
+
+  /**
+   * [Использование метода .createBatch()](@link https://github.com/vdistortion/bitrix24-library/blob/master/BATCH.md}
+   */
   createBatch: (
     handlerList?: IHandlerList | undefined,
     BatchClass?: IBitrix24Batch | undefined,
   ) => IBitrix24Batch;
-  openLink: (url: string, inNewTab?: boolean) => void;
 }
 
 export declare type IBX24 = IBX24Vanilla & IBX24Async & IBX24Extended;
@@ -499,6 +505,4 @@ declare global {
   }
 }
 
-declare function Bitrix24(): Promise<IBX24>;
-
-export default Bitrix24;
+export declare function Bitrix24(): Promise<IBX24>;

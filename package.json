@@ -33,6 +33,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 4200",
     "build": "tsc && vite build",
+    "watch": "tsc && vite build --watch",
     "public:lib": "npm run build && npm publish",
     "public:gh-pages": "gh-pages -d docs/.vitepress/dist -t --nojekyll",
     "public": "npm run docs:build && npm run public:gh-pages",
