@@ -1,47 +1,50 @@
 import { loadScript } from './utils/loadScript';
-import type {
-  AjaxResultType,
-  BatchRequestType,
-  IAccess,
-  IAuthInfo,
-  IBX24Async,
-  IBX24Vanilla,
-  ISelectCRM,
-  IUser,
-  OpenApplicationParamsType,
-  SelectCRMResponseType,
-} from '../types';
+import type { IBitrix24, IBitrix24Async, RequestType } from '../types';
+import { AjaxResultType } from '../types/request.types.ts';
 
-export function createBitrix24Async(BX24: IBX24Vanilla): IBX24Async {
+export function createBitrix24Async(BX24: IBitrix24): IBitrix24Async {
   return {
-    initAsync(): Promise<void> {
+    initAsync() {
       return new Promise((resolve) => {
         BX24.init(resolve);
       });
     },
 
-    installAsync(): Promise<void> {
+    installAsync() {
       return new Promise((resolve) => {
         BX24.install(resolve);
       });
     },
 
-    refreshAuthAsync(): Promise<IAuthInfo> {
+    refreshAuthAsync() {
       return new Promise((resolve) => {
         BX24.refreshAuth(resolve);
       });
     },
 
-    callBatchAsync<T, A>(
-      calls: BatchRequestType<T>,
+    // @ts-ignore
+    callBatchAsync<R, P extends object>(
+      calls: RequestType<P>[] | Record<string, RequestType<P>>,
       bHaltOnError?: boolean,
-    ): Promise<Record<string, AjaxResultType<T, A>> | AjaxResultType<T, A>[]> {
+    ): Promise<AjaxResultType<R, P>[] | Record<string, AjaxResultType<R, P>>> {
       return new Promise((resolve) => {
-        BX24.callBatch(calls, resolve, bHaltOnError);
+        if (Array.isArray(calls)) {
+          BX24.callBatch<R, P>(
+            calls,
+            resolve as (result: AjaxResultType<R, P>[]) => void,
+            bHaltOnError,
+          );
+        } else {
+          BX24.callBatch<R, P>(
+            calls,
+            resolve as (result: Record<string, AjaxResultType<R, P>>) => void,
+            bHaltOnError,
+          );
+        }
       });
     },
 
-    selectUsersAsync(multiple): Promise<IUser | IUser[]> {
+    selectUsersAsync(multiple) {
       return new Promise((resolve) => {
         if (multiple) {
           BX24.selectUsers(resolve);
@@ -51,64 +54,61 @@ export function createBitrix24Async(BX24: IBX24Vanilla): IBX24Async {
       });
     },
 
-    selectAccessAsync(disablesValues: string[] = []): Promise<IAccess[]> {
+    selectAccessAsync(disablesValues = []) {
       return new Promise((resolve) => {
         if (disablesValues.length) BX24.selectAccess(disablesValues, resolve);
         else BX24.selectAccess(resolve);
       });
     },
 
-    selectCRMAsync(params?: ISelectCRM): Promise<SelectCRMResponseType> {
+    selectCRMAsync(params) {
       return new Promise((resolve) => {
         if (params) BX24.selectCRM(params, resolve);
         else BX24.selectCRM(resolve);
       });
     },
 
-    resizeWindowAsync(
-      width: number | string,
-      height: number | string,
-    ): Promise<{ width: number; height: number }> {
+    resizeWindowAsync(width, height) {
       return new Promise((resolve) => {
         BX24.resizeWindow(width, height, resolve);
       });
     },
 
-    fitWindowAsync(): Promise<{ width: number; height: number }> {
+    fitWindowAsync() {
       return new Promise((resolve) => {
         BX24.fitWindow(resolve);
       });
     },
 
-    setTitleAsync(title: string): Promise<{ title: string }> {
+    setTitleAsync(title) {
       return new Promise((resolve) => {
         BX24.setTitle(title, resolve);
       });
     },
 
-    readyAsync(): Promise<void> {
+    readyAsync() {
       return new Promise((resolve) => {
         BX24.ready(resolve);
       });
     },
 
-    loadScriptAsync(src: string) {
+    loadScriptAsync(src) {
       return loadScript(src);
     },
 
-    openApplicationAsync(params?: OpenApplicationParamsType): Promise<void> {
+    openApplicationAsync(params, settings) {
       return new Promise((resolve) => {
-        BX24.openApplication(params, resolve);
+        BX24.openApplication(params, resolve, settings);
       });
     },
 
-    scrollParentWindowAsync(scroll: number | string): Promise<{ scroll: number }> {
+    scrollParentWindowAsync(scroll) {
       return new Promise((resolve) => {
         BX24.scrollParentWindow(scroll, resolve);
       });
     },
 
-    openPathAsync(path: string): Promise<void> {
+    openPathAsync(path) {
       return new Promise((resolve, reject) => {
         BX24.openPath(path, (response) => {
           if (response.result === 'error') reject(new Error(response.errorCode));

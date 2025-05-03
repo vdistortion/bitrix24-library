@@ -1,20 +1,20 @@
-import type { BatchRequestType, IBitrix24Batch, IHandlerList } from '../types';
+import type { BatchType, HandlerListType, RequestType } from '../types';
 
-export class Bitrix24Batch implements IBitrix24Batch {
+export class Bitrix24Batch implements BatchType {
   private readonly callBatch: Function;
-  private handler: IHandlerList;
+  private handler: HandlerListType;
   private commands: any[] = [];
   private result: {} = {};
   private errors: {} = {};
   private readonly delay: number = 500;
   private readonly limit: number = 50;
 
-  constructor(callBatch: Function, handlerList: IHandlerList = {}) {
+  constructor(callBatch: Function, handlerList: HandlerListType = {}) {
     this.callBatch = callBatch;
     this.handler = handlerList;
   }
 
-  batch<T>(request: BatchRequestType<T>) {
+  batch<T>(request: Record<string, RequestType<T>> | RequestType<T>[]) {
     this.commands = [];
     this.result = {};
     this.errors = {};

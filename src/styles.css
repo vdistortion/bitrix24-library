@@ -1,3 +1,12 @@
 #app {
-  column-count: 7;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: calc(100vh - 40px);
+  max-width: 650px;
+}
+
+#app button {
+  max-width: 200px;
+  width: 100%;
 }

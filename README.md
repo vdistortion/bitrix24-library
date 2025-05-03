@@ -20,7 +20,7 @@ npm i -S bitrix24-library@latest
 import { Bitrix24 } from 'bitrix24-library';
 
 Bitrix24().then((BX24) => {
-  console.log(BX24.getAuth());
+  console.log(BX24.getDomain());
 
   const RestCall = BX24.createBatch();
   RestCall.batch({
@@ -35,22 +35,23 @@ Bitrix24().then((BX24) => {
 ```js
 // main.js
 import { createApp } from 'vue';
-import { Bitrix24, type IBX24 } from 'bitrix24-library';
+import { Bitrix24 } from 'bitrix24-library';
 import App from './App.vue';
 
-Bitrix24().then((BX24: IBX24) => {
+Bitrix24().then((BX24) => {
   createApp(App).provide('$BX24', BX24).mount('#app');
 });
 ```
 
 ```html
+<!-- Composition API -->
 <script setup lang="ts">
-  // Composition API
   import { inject } from 'vue';
+  import type { IBitrix24Library } from 'bitrix24-library';
 
-  const BX24 = inject('$BX24')!;
+  const BX24 = inject<IBitrix24Library>('$BX24')!;
 
-  console.info(BX24.getAuth());
+  console.info(BX24.getDomain());
 
   const RestCall = BX24.createBatch();
   RestCall.batch({
@@ -59,11 +60,11 @@ Bitrix24().then((BX24: IBX24) => {
   }).then(console.info);
 </script>
 
+<!-- Options API -->
 <script lang="ts">
-  // Options API
   export default {
     mounted() {
-      console.info(this.$BX24.getAuth());
+      console.info(this.$BX24.getDomain());
 
       const RestCall = this.$BX24.createBatch();
       RestCall.batch({
@@ -76,9 +77,9 @@ Bitrix24().then((BX24: IBX24) => {
 </script>
 ```
 
-## Битрикс24
+## API
 
-- [Методы BX24](BITRIX24.md)
+> [Методы BX24](BX24.md)
 
 ### Асинхронные методы
 
@@ -106,7 +107,7 @@ Bitrix24().then((BX24: IBX24) => {
 
 - `.loadScriptAsync(src)` — Загружает и выполняет клиентский js-файл
 
-- `.openApplicationAsync([params])` — Метод открывает приложение
+- `.openApplicationAsync([[params], settings])` — Метод открывает приложение
 
 - `.scrollParentWindowAsync(scroll)` — Метод прокручивает родительское окно
 
@@ -114,9 +115,9 @@ Bitrix24().then((BX24: IBX24) => {
 
 ### Новые методы
 
-- `.createBatch([handlerList[, BatchClass]])` — Создание пакетного выполнения запросов, надстройка над `.callBatch()` ([подробнее](BATCH.md))
+- `.createBatch([handlerList])` — Создание пакетного выполнения запросов, надстройка над `.callBatch()` ([подробнее](BATCH.md))
 
-- `.isMobile()` — [is-mobile](https://www.npmjs.com/package/is-mobile)
+- `.isMobile([opts])` — [is-mobile](https://www.npmjs.com/package/is-mobile)
 
 ## Ссылки
 

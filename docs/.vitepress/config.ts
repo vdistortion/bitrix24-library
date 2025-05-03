@@ -23,6 +23,7 @@ export default defineConfig({
         text: 'Docs',
         items: [
           { text: 'bitrix24-library', link: '/docs' },
+          { text: 'BX24', link: '/bx24' },
           { text: '.createBatch()', link: '/rest-call' },
           { text: '.isMobile()', link: 'https://www.npmjs.com/package/is-mobile' },
         ],

@@ -32,10 +32,10 @@ npm i bitrix24-library@latest
 ## Use
 
 ```js
-import Bitrix24 from 'bitrix24-library';
+import { Bitrix24 } from 'bitrix24-library';
 
-Bitrix24.init().then((BX24) => {
-  console.log(BX24.getAuth());
+Bitrix24().then((BX24) => {
+  console.log(BX24.getDomain());
 
   const RestCall = BX24.createBatch();
   RestCall.batch({
