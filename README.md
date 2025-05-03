@@ -2,7 +2,6 @@
 
 [![NPM Version](https://img.shields.io/npm/v/bitrix24-library?style=flat&logo=npm&label=version&color=cb3837)](https://www.npmjs.com/package/bitrix24-library)
 [![NPM Downloads](https://img.shields.io/npm/dw/bitrix24-library?style=flat&logo=npm&color=cb3837)](https://www.npmjs.com/package/bitrix24-library)
-[![GitHub repo size](https://img.shields.io/github/repo-size/vdistortion/bitrix24-library?style=flat&logo=github)](https://github.com/vdistortion/bitrix24-library)
 [![GitHub Repo stars](https://img.shields.io/github/stars/vdistortion/bitrix24-library?style=flat&logo=github)](https://github.com/vdistortion/bitrix24-library)
 [![GitHub Created At](https://img.shields.io/github/created-at/vdistortion/bitrix24-library?style=flat&logo=github)](https://github.com/vdistortion/bitrix24-library)
 
@@ -125,8 +124,9 @@ Bitrix24().then((BX24) => {
 - [react-bitrix24](https://www.npmjs.com/package/react-bitrix24)
 - [bitrix24-create-app](https://www.npmjs.com/package/bitrix24-create-app)
 - [bitrix24-stickerpack-app](https://github.com/vdistortion/bitrix24-stickerpack-app)
+- [bitrix24-pricing-app](https://github.com/vdistortion/bitrix24-pricing-app)
 
 <details>
-  <summary>:imp:</summary>
-  Если вам не повезло работать с битриксом, надеюсь данная библиотека хоть немного облегчит разработку ¯\_(ツ)_/¯
+  <summary>¯\_(ツ)_/¯</summary>
+  Если вам не повезло работать с битриксом, надеюсь данная библиотека хоть немного облегчит разработку
 </details>
