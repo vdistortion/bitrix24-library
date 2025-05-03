@@ -1,0 +1,1 @@
+import{_ as l,c as i,o as a,ae as c}from"./chunks/framework.vG8N1cFx.js";const b=JSON.parse('{"title":"Битрикс24","description":"","frontmatter":{},"headers":[],"relativePath":"bx24.md","filePath":"bx24.md"}'),o={name:"bx24.md"};function t(r,e,d,p,n,s){return a(),i("div",null,e[0]||(e[0]=[c("",15)]))}const u=l(o,[["render",t]]);export{b as __pageData,u as default};
